@@ -3,13 +3,14 @@ import json
 import datetime
 import os
 
-DATASET_DIR = "Dataset/TestDataset/"
+DATASET_DIR = "Dataset/PlantVillage/"
 TRAIN_DIR   = DATASET_DIR + "/train"
 VALID_DIR   = DATASET_DIR + "/validation"
 MODEL_DIR   = "./models/"
 LOG_DIR     = "./logs/"
 IMAGE_SIZE  = (299, 299)
 BATCH_SIZE  = 16
+LEARNING_RATE = 0.001
 
 print("*"*50)
 if tf.test.gpu_device_name():
@@ -72,7 +73,6 @@ if latest:
     model.load_weights(latest)
     print("*"*50)
 
-LEARNING_RATE = 0.001 #@param {type:"number"}
 model.compile(
    optimizer=tf.keras.optimizers.Adam(lr=LEARNING_RATE), 
    loss='categorical_crossentropy',
