@@ -5,7 +5,7 @@ import os
 import cv2
 import numpy as np
 
-DATASET_DIR = "Dataset/TestDataset/"
+DATASET_DIR = "Dataset/PlantVillage/"
 TRAIN_DIR   = DATASET_DIR + "/train"
 VALID_DIR   = DATASET_DIR + "/validation"
 MODEL_DIR   = "./models/"
@@ -13,7 +13,7 @@ LOG_DIR     = "./logs/"
 IMAGE_SIZE  = (299, 299)
 BATCH_SIZE  = 16
 FV_SIZE     = 2048
-NUM_CLASS   = 2
+NUM_CLASS   = 38
 
 def load_image(filename):
     img = cv2.imread(filename)
