@@ -10,7 +10,6 @@ MODEL_DIR   = "./models/"
 LOG_DIR     = "./logs/"
 IMAGE_SIZE  = (299, 299)
 BATCH_SIZE  = 16
-FV_SIZE     = 2048
 
 print("*"*50)
 if tf.test.gpu_device_name():
@@ -56,20 +55,6 @@ print("*"*50)
 print()
 print("*"*50)
 
-# validation_datagen = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
-# validation_generator = validation_datagen.flow_from_directory(
-#     VALID_DIR, 
-#     shuffle=False, 
-#     seed=42,
-#     color_mode="rgb", 
-#     class_mode="categorical",
-#     target_size=IMAGE_SIZE,
-#     batch_size=BATCH_SIZE)
-
-print("*"*50)
-print()
-print("*"*50)
-
 model = tf.keras.Sequential([
     tf.keras.applications.InceptionV3(input_shape=IMAGE_SIZE+(3,)),
     tf.keras.layers.Flatten(),
@@ -81,9 +66,11 @@ model = tf.keras.Sequential([
 
 latest = tf.train.latest_checkpoint(MODEL_DIR)
 if latest:
+    print("*"*50)
     print("Load weight from last")
     print(latest)
     model.load_weights(latest)
+    print("*"*50)
 
 LEARNING_RATE = 0.001 #@param {type:"number"}
 model.compile(
@@ -99,8 +86,14 @@ print("*"*50)
 
 now = datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
 
+if not os.path.isdir(LOG_DIR):
+    os.mkdir(LOG_DIR)
+
 log_dir = LOG_DIR + now
-tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1, update_freq=100)
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1, update_freq='batch')
+
+if not os.path.isdir(MODEL_DIR):
+    os.mkdir(MODEL_DIR)
 
 checkpoint_path = MODEL_DIR + "/cp-" + now + "-{epoch:04d}.ckpt"
 checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
