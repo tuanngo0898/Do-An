@@ -4,6 +4,7 @@ import datetime
 import os
 import cv2
 import numpy as np
+import sys
 
 DATASET_DIR = "Dataset/PlantVillage/"
 TRAIN_DIR   = DATASET_DIR + "/train"
@@ -13,7 +14,6 @@ LOG_DIR     = "./logs/"
 IMAGE_SIZE  = (299, 299)
 BATCH_SIZE  = 16
 FV_SIZE     = 2048
-NUM_CLASS   = 38
 
 def load_image(filename):
     img = cv2.imread(filename)
@@ -42,11 +42,11 @@ print()
 print("*"*50)
 
 model = tf.keras.Sequential([
-    tf.keras.applications.InceptionV3(input_shape=IMAGE_SIZE+(3,)),
+    tf.keras.applications.InceptionV3(input_shape=IMAGE_SIZE+(3,),  include_top=False, weights='imagenet'),
     tf.keras.layers.Flatten(),
     tf.keras.layers.Dense(512, activation='relu'),
     tf.keras.layers.Dropout(rate=0.2),
-    tf.keras.layers.Dense(NUM_CLASS, activation='softmax',
+    tf.keras.layers.Dense(len(classes), activation='softmax',
                            kernel_regularizer=tf.keras.regularizers.l2(0.0001))
 ])
 
@@ -58,7 +58,9 @@ if latest:
 
 model.summary()
 
-img = load_image('./Dataset/PlantVillage/validation/Apple___Apple_scab/00075aa8-d81a-4184-8541-b692b78d398a___FREC_Scab 3335.JPG')
+img = load_image(sys.argv[1])
 probabilities = model.predict(np.asarray([img]))[0]
+print("probabilities: ")
+print(probabilities)
 class_idx = np.argmax(probabilities)
 print("PREDICTED: class: %s, confidence: %f" % (classes[class_idx], probabilities[class_idx]))

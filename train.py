@@ -57,12 +57,12 @@ print()
 print("*"*50)
 
 model = tf.keras.Sequential([
-    tf.keras.applications.InceptionV3(input_shape=IMAGE_SIZE+(3,)),
+    tf.keras.applications.InceptionV3(input_shape=IMAGE_SIZE+(3,),  include_top=False, weights='imagenet'),
     tf.keras.layers.Flatten(),
     tf.keras.layers.Dense(512, activation='relu'),
     tf.keras.layers.Dropout(rate=0.2),
     tf.keras.layers.Dense(train_generator.num_classes, activation='softmax',
-                           kernel_regularizer=tf.keras.regularizers.l2(0.0001))
+                           kernel_regularizer=tf.keras.regularizers.l2(LEARNING_RATE))
 ])
 
 latest = tf.train.latest_checkpoint(MODEL_DIR)
