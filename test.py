@@ -17,8 +17,9 @@ FV_SIZE     = 2048
 
 def load_image(filename):
     img = cv2.imread(filename)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
     img = cv2.resize(img, (IMAGE_SIZE[0], IMAGE_SIZE[1]) )
-    img = img /255
+    img = img /255.0
     return img
 
 print("*"*50)
@@ -42,12 +43,11 @@ print()
 print("*"*50)
 
 model = tf.keras.Sequential([
-    tf.keras.applications.InceptionV3(input_shape=IMAGE_SIZE+(3,),  include_top=False, weights='imagenet'),
+    tf.keras.applications.InceptionV3(input_shape=IMAGE_SIZE+(3,),  include_top=False),
     tf.keras.layers.Flatten(),
     tf.keras.layers.Dense(512, activation='relu'),
     tf.keras.layers.Dropout(rate=0.2),
-    tf.keras.layers.Dense(len(classes), activation='softmax',
-                           kernel_regularizer=tf.keras.regularizers.l2(0.0001))
+    tf.keras.layers.Dense(len(classes), activation='softmax')
 ])
 
 latest = tf.train.latest_checkpoint(MODEL_DIR)
@@ -55,6 +55,9 @@ if latest:
     print("Load weight from last")
     print(latest)
     model.load_weights(latest)
+else:
+    print("No weights. Exits")
+    exit()
 
 model.summary()
 
