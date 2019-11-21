@@ -62,7 +62,7 @@ model = tf.keras.Sequential([
     tf.keras.layers.Dense(512, activation='relu'),
     tf.keras.layers.Dropout(rate=0.2),
     tf.keras.layers.Dense(train_generator.num_classes, activation='softmax',
-                           kernel_regularizer=tf.keras.regularizers.l2(LEARNING_RATE))
+                           kernel_regularizer=tf.keras.regularizers.l2(0.0001))
 ])
 
 latest = tf.train.latest_checkpoint(MODEL_DIR)
