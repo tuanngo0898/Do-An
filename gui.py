@@ -63,7 +63,7 @@ Label(gui, text="Image path: ").grid(row=0, sticky=W)
 txtbPath = Entry(gui)
 txtbPath.grid(row=0, column=1, columnspan=2, sticky=W)
 
-Label(gui, text="Label: ").grid(row=1, sticky=W)
+Label(gui, text="True label: ").grid(row=1, sticky=W)
 txtbTrueLabel = Entry(gui)
 txtbTrueLabel.grid(row=1, column=1, columnspan=2, sticky=W)
 
@@ -75,7 +75,7 @@ Label(gui, text="Confident: ").grid(row=3, column=0, sticky=W)
 txtbScore = Entry(gui)
 txtbScore.grid(row=3, column=1, sticky=W)
 
-Label(gui, text="Corectionness: ").grid(row=4, column=0, sticky=W)
+Label(gui, text="Result: ").grid(row=4, column=0, sticky=W)
 txtbCorrect = Entry(gui)
 txtbCorrect.grid(row=4, column=1, sticky=W)
 
