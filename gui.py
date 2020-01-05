@@ -57,7 +57,7 @@ model.summary()
 
 gui = tk.Tk()
 gui.resizable(False, False)
-gui.title("Desease Identification")
+gui.title("Disease Identification")
 
 Label(gui, text="Image path: ").grid(row=0, sticky=W)
 txtbPath = Entry(gui)
