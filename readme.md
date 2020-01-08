@@ -15,7 +15,7 @@ For normal tranning, this project need python tensorflow or tensorflow-gpu to be
 * Install cuda cudnn7
 * Install tensorfow-gpu
 
-You need to retrain the model yourself.
+You need to retrain the model yourself:
 
 To test the model:
 ```
