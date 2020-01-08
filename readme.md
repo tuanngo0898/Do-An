@@ -9,7 +9,7 @@ The purpose of this project to used CNN network to solve a classification proble
 
 For cloud trainning, this project include Colab.ipynb file which is used to train the model with Colab.
 
-For normal tranning, this project need python tensorflow or tensorflow-gpu to be pre-installed.
+For normal tranning, this project need python tensorflow or tensorflow-gpu to be pre-installed:
 
 * Install cuda toolkit 10.0
 * Install cuda cudnn7
